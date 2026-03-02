@@ -15,12 +15,30 @@ let notes = [
 
 // RETRIEVE all notes
 app.get('/notes', (req, res) => {
-  res.status(200).json(notes); 
+  return res.status(200).json(notes); 
+});
+
+app.get('/notes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const note = notes.find((n) => n.id === id);
+
+if (!note) {
+  return res.status(404).json({ message: 'Note not found' });
+}
+
+res.status(202).json()
+
 });
 
 
-// Create all notes
+// Create notes
 app.post('/notes', (req, res) => {
+  const title = req.body?.title;
+
+if (typeof title !== "string" || title.trim() === "") {
+  return res.status(400).json({ error: "title is required" });
+}
+
   const newNote = { id: notes.length + 1, ...req.body };
   notes.push(newNote);
   res.status(201).json(newNote); // Echo back
