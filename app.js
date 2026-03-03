@@ -110,7 +110,14 @@ app.delete('/notes/:id', (req, res) => {
   res.status(204).send(); // Silent success
 });
 
-
+// Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    error: "Internal Server Error",
+    message: err.message || "Something went wrong on our end."
+  });
+});
 
 
 
