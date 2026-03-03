@@ -26,7 +26,7 @@ if (!note) {
   return res.status(404).json({ message: 'Note not found' });
 }
 
-res.status(202).json();
+res.status(202).json()
 
 });
 
