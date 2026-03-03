@@ -62,19 +62,27 @@ res.status(202).json(note);
 app.post('/notes', (req, res) => {
     const { title, content } = req.body;
 
-    // Basic validation
+    // 1. Basic validation
     if (!title || !content) {
         return res.status(400).json({ error: "Title and content are required" });
     }
 
+    // 2. Generate a truly unique ID 
+    // It finds the highest ID currently in the array and adds 1.
+    // If the array is empty, it starts at 1.
+    const maxId = notes.length > 0 
+        ? Math.max(...notes.map(n => n.id)) 
+        : 0;
+
     const newNote = {
-        id: notes.length + 1,
+        id: maxId + 1,
         title: title,
         content: content,
-        timestamp: new Date().toISOString(), // Sets the current date and time
-        version: "1.0"                        // Starts every new note at version 1.0
+        timestamp: new Date().toISOString(), // Automatically sets current time
+        version: "1.0"                        // Initial version
     };
 
+    // 3. Save and Respond
     notes.push(newNote);
     res.status(201).json(newNote); 
 });
