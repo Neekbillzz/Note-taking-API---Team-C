@@ -81,7 +81,7 @@ app.delete('/notes/:id', (req, res) => {
   notes = notes.filter((n) => n.id !== id); // Array.filter() – non-destructive
   if (notes.length === initialLength)
     return res.status(404).json({ error: 'Not found' });
-  res.status(204).send; // Silent success
+  res.status(204).send(); // Silent success
 });
 
 
