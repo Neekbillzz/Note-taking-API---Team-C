@@ -47,10 +47,10 @@ const getAllNotes =  (req, res) =>{
 
 
 
-//COUNT VARIABLE FOR AUTO-ASSIGNMENT OF IDs
+//===========createNote==============================
+
 let assignId = 3; // Initialised at 3 because 2 records already exist in the "notes" array
 
-//===========createNote==============================
 
 const createNote = (req, res) =>{
   const newNote = {
@@ -99,7 +99,7 @@ const updateNote = (req, res) =>{
 
   const {id, version, ...updates} = req.body; // Removes id and version fields from the remaining request body
 
-  Object.assign(noteToUpdate, updates); // Merge the changes made, back into the note object
+  Object.assign(noteToUpdate, updates); // Merge the changes back into the note object
   noteToUpdate.updatedAt = new Date().toISOString();
    
 
@@ -127,13 +127,13 @@ const allArchives = (req, res) =>{
 
 const getArchivedNoteById = (req, res) =>{
     const noteId = parseInt(req.params.id);
-    const notesById = versionHistory.filter(vh => vh.id === noteId); // Return all archives with id = noteId
+    const notesById = versionHistory.filter(vh => vh.id === noteId); // Return all archives where id = noteId
    
     if(notesById.length === 0 ){
         return res.status(404).json( {error: 'ARCHIVES NOT FOUND'}); // Bad request
     };
 
-    const sortByVersion = [...notesById].sort((a,b) => a.version - b.version); // Sort achives by version number
+    const sortByVersion = [...notesById].sort((a,b) => a.version - b.version); // Sort achives by version number (Ascending order)
 
     return res.status(200).json(sortByVersion); // Send note archives, sorted by version number
 
@@ -197,4 +197,5 @@ module.exports = {
     deleteArchivedById
 
 };
+
 
