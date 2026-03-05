@@ -2,57 +2,47 @@ require("dotenv").config();
 
 const express = require('express');
 const handler = require('./routeHandler');
-
 const app = express();
+
+//parse json body
 app.use(express.json());
 
 
 
-
-
-// GET ALL NOTES SORTED BY TIME CREATED (NEWEST TO OLDEST)
+// RETRIEVE ALL RECORDS. SORT BY DATE (NEWEST TO OLDEST)
 app.get('/notes', handler.getAllNotes);
 
 
-
-// CREATE A NEW DOCUMENT
+// CREATE NEW RECORD
 app.post('/notes', handler.createNote);
 
 
-
-// RETRIEVE ONLY ONE DOCUMENT
+// RETRIEVE ONE RECORD
 app.get('/notes/:id', handler.getOneNote );
 
 
-
-// UPDATE AN EXISTING DOCUMENT
+// UPDATE RECORD
 app.patch('/notes/:id', handler.updateNote); 
 
 
-
-
-// GET ALL ARCHIVED NOTE, SORT BY ID
+// RETRIVE ALL ARCHIVED RECORDS. SORT BY ID
 app.get('/archived', handler.allArchives);
 
 
-
-// GET ALL ARCHIVED NOTES WITH THE SAME ID
+// RETRIEVE ALL ARCHIVED RECORDS WHERE ID = x
 app.get('/archived/:id', handler.getArchivedNoteById);
 
 
-
-// DELETE NOTE FROM MEMORY(notes array)
+// DELETE RECORD
 app.delete('/notes/:id',handler.deleteNote );
 
 
-
-// DELETE ARCHIVED NOTE WHERE ID = x AND VERSION = y FROM MEMORY(versionHistory array)
+// DELETE ARCHIVED RECORD, WHERE ID = x AND VERSION = y
 app.delete('/versionHistory/:id/:version', handler.deleteArchivedNote);
 
 
-// DELETE ALL ARCHIVED NOTE WHERE ID =x FROM MEMORY
+// DELETE ALL ARCHIVED RECORDS, WHERE ID = x 
 app.delete('/versionHistory/:id', handler.deleteArchivedById);
-
 
 
 // ERROR HANDLING MIDDLEWARE
@@ -61,9 +51,9 @@ app.use((err, req, res, next) => {
   
 });
 
-
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () =>{
   console.log(`server is running at port ${PORT}`);
+
 });
