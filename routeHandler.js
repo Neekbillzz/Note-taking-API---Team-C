@@ -1,4 +1,4 @@
-
+//This array will contain all the notes created by a user
 let notes = [{
     id: 1,
     title: 'First Class',
@@ -22,14 +22,14 @@ let notes = [{
 let versionHistory = [{
     id: 1,
     title: 'First Class',
-    content: 'id = 1, first update',
+    content: 'Intro to Backend',
     createdAt: '2026-03-07T17:00:00Z',
     version: 1
   },
   {
     id: 2,
     title: 'Second Class',
-    content: 'id =2, first update',
+    content: 'Node js and Express',
     createdAt: '2026-03-14T17:15:00Z',
     version: 1
   }
@@ -47,6 +47,8 @@ const getAllNotes =  (req, res) =>{
 
 
 
+//COUNT VARIABLE FOR AUTO-ASSIGNMENT OF IDs
+let assignId = 3; // Initialised at 3 because 2 records already exist in the "notes" array
 
 //===========createNote==============================
 
@@ -74,19 +76,14 @@ const getOneNote = (req, res) =>{
   const retrieveNote = notes.find(note => note.id === noteId);
   
   if(!retrieveNote){
-    return res.status(404).json({error: 'Document not found'});
+    return res.status(404).json({error: 'DOCUMENT NOT FOUND'});
   }
   return res.status(200).json(retrieveNote);
 };
 
 
 
-
 //================updateNote=======================
-
-//COUNT VARIABLE FOR AUTO-ASSIGNMENT OF IDs
-let assignId = 3;
-
 
 const updateNote = (req, res) =>{ 
 
@@ -97,10 +94,10 @@ const updateNote = (req, res) =>{
     return res.status(404).json({error: 'Document not found'});
   };
 
-  versionHistory.push({...noteToUpdate, archiveAt: new Date().toISOString()}); // retain the old note and records the date it was retained
+  versionHistory.push({...noteToUpdate, archiveAt: new Date().toISOString()}); // Retain the original note and records its archival data
   noteToUpdate.version++; // increment version number
 
-  const {id, version, ...updates} = req.body; // Remove the id and version fields from the rest of the body
+  const {id, version, ...updates} = req.body; // Removes id and version fields from the remaining request body
 
   Object.assign(noteToUpdate, updates); // Merge the changes made, back into the note object
   noteToUpdate.updatedAt = new Date().toISOString();
@@ -198,4 +195,5 @@ module.exports = {
     deleteNote,
     deleteArchivedNote,
     deleteArchivedById
+
 };
