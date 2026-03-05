@@ -3,14 +3,14 @@ let notes = [{
     id: 1,
     title: 'First Class',
     content: 'Intro to Backend',
-    createdAt: '2026-03-07T17:00:00Z',
+    createdAt: '2025-03-07T17:00:00Z',
     version: 1
   },
   {
     id: 2,
     title: 'Second Class',
     content: 'Node js and Express',
-    createdAt: '2026-03-14T17:15:00Z',
+    createdAt: '2025-03-14T17:15:00Z',
     version: 1
   }
   ];
@@ -23,14 +23,14 @@ let versionHistory = [{
     id: 1,
     title: 'First Class',
     content: 'Intro to Backend',
-    createdAt: '2026-03-07T17:00:00Z',
+    createdAt: '2025-03-07T17:00:00Z',
     version: 1
   },
   {
     id: 2,
     title: 'Second Class',
     content: 'Node js and Express',
-    createdAt: '2026-03-14T17:15:00Z',
+    createdAt: '2025-03-14T17:15:00Z',
     version: 1
   }
   ];
@@ -94,7 +94,7 @@ const updateNote = (req, res) =>{
     return res.status(404).json({error: 'Document not found'});
   };
 
-  versionHistory.push({...noteToUpdate, archiveAt: new Date().toISOString()}); // Retain the original note and records its archival data
+  versionHistory.push({...noteToUpdate, archiveAt: new Date().toISOString()}); // Retain the original note and records its archival date
   noteToUpdate.version++; // increment version number
 
   const {id, version, ...updates} = req.body; // Removes id and version fields from the remaining request body
@@ -197,3 +197,4 @@ module.exports = {
     deleteArchivedById
 
 };
+
